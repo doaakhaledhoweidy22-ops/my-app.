@@ -1,0 +1,47 @@
+rules_version = '2';
+// Paste into Firebase console → Firestore Database → Rules → Publish.
+// ⚠ Replace BOTH emails below with the same two (lowercase) emails you put in js/config.js.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isCouple() {
+      return signedIn() && request.auth.token.email in ['yassin@example.com', 'lara@example.com'];
+    }
+
+    // Everything private: only the two of you.
+    match /posts/{id}          { allow read, write: if isCouple(); }
+    match /story/{id}          { allow read, write: if isCouple(); }
+    match /songs/{id}          { allow read, write: if isCouple(); }
+    match /letters/{id}        { allow read, write: if isCouple(); }
+    match /games/{id}          { allow read, write: if isCouple(); }
+    match /locations/{id}      { allow read, write: if isCouple(); }
+    match /calls/{id} {
+      allow read, write: if isCouple();
+      match /{sub}/{cid}       { allow read, write: if isCouple(); }
+    }
+
+    // A notification can be read/updated only by the person it is addressed to.
+    match /notifications/{id} {
+      allow create: if isCouple();
+      allow read, update: if isCouple() && request.auth.token.email == resource.data.toEmail;
+      allow delete: if isCouple() && request.auth.token.email == resource.data.toEmail;
+    }
+
+    // Wedding gallery: guests (anonymous sign-in via the QR page) may VIEW and ADD only. Couple can also delete.
+    match /wedding/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['url', 'type', 'by', 'uid', 'createdAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.type in ['image', 'video']
+        && request.resource.data.url is string
+        && request.resource.data.url.matches('https://res\\.cloudinary\\.com/.*')
+        && request.resource.data.by is string && request.resource.data.by.size() <= 60;
+      allow update: if false;
+      allow delete: if isCouple();
+    }
+
+    match /{document=**} { allow read, write: if false; }
+  }
+}

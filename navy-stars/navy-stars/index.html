@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Y &amp; L — Our Little World</title>
+  <meta name="theme-color" content="#070b19">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="stars" aria-hidden="true"></canvas>
+  <div id="boot"><div class="boot-star">✦</div></div>
+
+  <!-- shown only until js/config.js is filled in -->
+  <div id="setup" class="center-screen" hidden>
+    <div class="card login-card">
+      <div class="eyebrow">Almost there</div>
+      <h1>Setup needed</h1>
+      <p class="muted">Open <span class="mono">js/config.js</span> and paste your Firebase + Cloudinary keys. The README walks you through it in about 10 minutes.</p>
+    </div>
+  </div>
+
+  <main id="login" class="center-screen" hidden>
+    <div class="card login-card">
+      <div class="eyebrow">A place made just for us</div>
+      <h1 id="loginTitle">Y &amp; L</h1>
+      <p class="muted">Only the two of us can enter.</p>
+      <form id="loginForm" novalidate>
+        <div class="stack">
+          <label class="field"><span>Email</span><input id="email" type="email" autocomplete="username" inputmode="email" autocapitalize="off" required></label>
+          <label class="field"><span>Password</span><input id="password" type="password" autocomplete="current-password" minlength="6" required></label>
+          <label class="field" id="confirmWrap" hidden><span>Confirm password</span><input id="password2" type="password" autocomplete="new-password"></label>
+          <div class="err" id="loginErr" role="alert"></div>
+          <button class="btn primary big" id="loginBtn" type="submit">Sign in ✦</button>
+          <div class="row between">
+            <button class="btn ghost sm" id="toggleMode" type="button">Create our account</button>
+            <button class="btn ghost sm" id="forgot" type="button">Forgot password?</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div id="app" hidden>
+    <header class="top">
+      <a class="brand" href="#/">Y &amp; L<small>Our Little World</small></a>
+      <button class="chip" id="bell" type="button" aria-label="Notifications">🔔 <span id="bellCount">0</span></button>
+      <span class="chip" id="meChip"><i class="dot"></i><span id="meName"></span></span>
+      <button class="chip" id="signOut" type="button">Sign out</button>
+    </header>
+    <div id="notifPanel" hidden></div>
+    <div id="view" class="container"></div>
+  </div>
+
+  <div id="toasts"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
