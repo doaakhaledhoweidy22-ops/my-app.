@@ -24,7 +24,7 @@ export const cloudinary = {
 // 3) The two people who can sign in. Emails MUST be lowercase and must also be
 //    copied into firestore.rules (see README). Index 0 = Player X / Player 1.
 export const members = [
-  { id: "yassin", name: "Yassin", email: "yassin@example.com", color: "#e4c9a0" }, // champagne gold
+  { id: "yassin", name: "Yassin", email: "yassin2404435@miuegypt.edu.eg", color: "#e4c9a0" }, // champagne gold
   { id: "lara",   name: "Lara",   email: "lara@example.com",   color: "#bcd0ff" }, // moonlight silver
 ];
 

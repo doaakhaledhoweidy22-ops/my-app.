@@ -6,7 +6,7 @@ service cloud.firestore {
 
     function signedIn() { return request.auth != null; }
     function isCouple() {
-      return signedIn() && request.auth.token.email in ['yassin@example.com', 'lara@example.com'];
+      return signedIn() && request.auth.token.email in ['yassin2404435@miuegypt.edu.eg', 'lara@example.com'];
     }
 
     // Everything private: only the two of you.
